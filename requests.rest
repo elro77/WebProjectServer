@@ -1,0 +1,3 @@
+POST  http://localhost:3001/api/register/:jim/:1234
+
+//GET  http://localhost:3001/api/login/:bob/:1234
