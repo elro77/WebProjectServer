@@ -147,6 +147,35 @@ const Project = mongoose.model('projects', projectSchema)
     
   }
 
+  function getProjectJson(projectID,response)
+  {
+    Project.findById({ _id:`${projectID}`},function(err,project)
+    {
+      
+        if (err)
+        {
+            response.status(404).end()
+            console.log("DB Error")
+        }   
+        else if( project!=null)
+        {
+            response.status(200)
+            console.log(project)
+            console.log(typeof project)
+            response.json(project)
+            console.log("project exists in Db")
+
+        }
+        else
+        {
+              response.status(200)
+              response.json(null);
+              console.log("project does not exists in Db")
+        }
+    })
+    
+  }
+
   function addMember(userName,projectName,premission,id,response)
   {
       console.log("db.addMember")
@@ -342,4 +371,4 @@ const Project = mongoose.model('projects', projectSchema)
 
 
 
-  module.exports={findUserAndPassword,addUser,updateUser,addProject,addMember,addIssue,updateIssue}
+  module.exports={findUserAndPassword,addUser,updateUser,addProject,getProjectJson,addMember,addIssue,updateIssue}

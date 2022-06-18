@@ -42,6 +42,13 @@ server.get('/api/login/:userName/:password', (req, response) => {
     db.addProject(username,projectName,projectDesc,projectsList,response)
   })
 
+  
+  server.post('/api/getProjectJson/:projectID', (req, response) => {
+    console.log("index getProjectJson")
+    const projectID=(req.params.projectID).replace(':', '')
+    db.getProjectJson(projectID,response)
+  })
+
   server.post('/api/addMember/:userName/:projectName/:premission/:id', (req, response) => {
     console.log("index addMember")
     const username=(req.params.userName).replace(':', '')
