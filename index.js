@@ -31,7 +31,14 @@ server.get('/api/login/:userName/:password', (req, response) => {
         const password=(req.params.password).replace(':', '')
         console.log(username,password)
         db.addUser(username,password,{},response)
-      })
+      }) 
+
+
+  server.post('/api/getUserProjects/:userName', (req, response) => {
+    const username=(req.params.userName).replace(':', '')
+    console.log(username,password)
+    db.getUserProjects(username,response)
+  }) 
 
   server.post('/api/addProject/:userName/:projectName/:projectDesc/:projectsList', (req, response) => {
     const username=(req.params.userName).replace(':', '')

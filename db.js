@@ -70,6 +70,56 @@ const Project = mongoose.model('projects', projectSchema)
   }
 
 
+  function getUserProjects(name,response) {
+     
+    User.findOne({ username:`${name}`},function(err,user)
+   {
+       if (err)
+       {
+           response.status(404).end()
+           console.log("DB Error")
+       }   
+       else if(user !=null)
+       {
+           var userProjects = user.projectlists
+           if(userProjects.length != 0)
+           {
+               console.log("Get project List")
+               console.log(userProjects)
+               Project.find({
+                   _id: { $in:  userProjects}
+               }, function(err,userProjectsJSON){
+   
+                   console.log('All done!');
+                   console.log(userProjectsJSON);
+                   // sends null if user is not premitted
+                   userProjectsJSON = JSON.stringify(userProjectsJSON)
+                   response.status(200)
+                   response.json( { userName: `${name}`, userProjectsJSON: `${userProjectsJSON}`});
+                   // console.log( { userName: `${name}`, userProjectsJSON: `${userProjectsJSON}`});
+                   console.log("DB sign in respons sent")
+               }) 
+           }
+           else
+           {
+               console.log('Empty');
+               response.status(200)
+               response.json( { userName: `${name}`, userProjectsJSON: [] });
+           }
+           
+       } 
+       else
+       {
+           //sends null if user is not premitted
+           response.status(200)
+           response.json(user);
+           console.log("DB sign in respons sent")
+       }  
+   })
+   
+ }
+
+
   function addUser(username,password,list,response)
   {
     User.findOne({ username:`${username}`,password:`${password}`},function(err,user)
@@ -371,4 +421,4 @@ const Project = mongoose.model('projects', projectSchema)
 
 
 
-  module.exports={findUserAndPassword,addUser,updateUser,addProject,getProjectJson,addMember,addIssue,updateIssue}
+  module.exports={findUserAndPassword,getUserProjects,addUser,updateUser,addProject,getProjectJson,addMember,addIssue,updateIssue}
