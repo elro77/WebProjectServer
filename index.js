@@ -36,7 +36,8 @@ server.get('/api/login/:userName/:password', (req, response) => {
 
   server.post('/api/getUserProjects/:userName', (req, response) => {
     const username=(req.params.userName).replace(':', '')
-    console.log(username,password)
+    console.log("index getUserProjects")
+    console.log(username)
     db.getUserProjects(username,response)
   }) 
 

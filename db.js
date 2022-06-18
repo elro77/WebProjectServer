@@ -71,7 +71,8 @@ const Project = mongoose.model('projects', projectSchema)
 
 
   function getUserProjects(name,response) {
-     
+    console.log("DB getUserProjects")
+    console.log(name)
     User.findOne({ username:`${name}`},function(err,user)
    {
        if (err)
